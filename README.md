@@ -1,38 +1,37 @@
-Zimbra-AD-Sync
-==============
+# Identity Management Scripts
 
-Zimbra Collaboration Suite Mailboxs Active Directory Users Sync
+A collection of Active Directory and Windows workstation scripts for user lifecycle, domain join, and desktop provisioning.
 
-### Installation
+Each tool lives in its own folder with a focused README. Edit the embedded configuration for your domain, then run or deploy as documented per script.
 
-1. Clone this script from github or copy the files manually to your prefered directory.
+## Repository Structure
 
-2. Create settings.cfg from settings.cfg.example and change:
+```text
+identity-management-scripts/
+├── disable-inactive-ad-users/
+├── get-ad-users-last-logon-report/
+├── map-drives-and-printers/
+└── pc-renamer/
+```
 
-##### Folder settings
-	    LDAPSEARCH=/opt/zimbra/bin/ldapsearch
-	    ZMPROV=/opt/zimbra/bin/zmprov
-	    TMP_DIR=/scripts
-	    HOME_DIR=/scripts
-	    EXCLUDE_FILE=exclude.txt
+## Scripts
 
-##### Server values
-	    DOMAIN_NAME="domain.com"
-	    LDAP_SERVER="ldap://dc01.domain.com"
-	    BASEDN="dc=domain,dc=com"
-	    BINDDN="CN=USERNAME,OU=MYOU,DC=domain,DC=com"
-	    BINDPW="PASSWORD"
-	    FIELDS="mail"
+| Script | Description |
+|--------|-------------|
+| **disable-inactive-ad-users** | PowerShell — disable AD users inactive (or unused since creation) beyond a set number of days; writes a CSV report |
+| **get-ad-users-last-logon-report** | VBScript — report last logon for users and computers across the domain (optional OU filter) |
+| **map-drives-and-printers** | VBScript — map network drives and printers from AD group membership at logon |
+| **pc-renamer** | PowerShell — rename a PC from its IP/VLAN mapping and join it to the correct AD OU (startup service) |
 
-#### Create an AD group called Zimbra or use the filter to include the entire AD:
+## Typical Use
 
-##### Only add members of AD group "Zimbra" in OU Users
-	    #FILTER="(&(sAMAccountName=*)(objectClass=user)(givenName=*)(memberOf=cn=Zimbra,cn=Users,$BASEDN))"
+1. Clone the repository (or copy the folder you need).
+2. Open that script’s README and adjust domain, OU, paths, and credentials for your environment.
+3. Run or install as described for that tool.
 
-##### Add all AD users
-	    #FILTER="(&(sAMAccountName=*)(objectClass=user)(givenName=*))"
+## Author
 
+**Adam Mallul (RaveMaker)**
 
-Author: [RaveMaker][RaveMaker].
-
-[RaveMaker]: http://ravemaker.net
+- GitHub: https://github.com/RaveMaker
+- Website: https://ravemaker.net
